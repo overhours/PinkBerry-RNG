@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pinkberry RNG</title>
+  <meta name="description" content="A cute pixel-art collecting game for Windows. Roll for treasures, find rare ones, collect them all." />
+  <meta property="og:title" content="Pinkberry RNG" />
+  <meta property="og:description" content="A cute pixel-art collecting game for Windows." />
+  <meta property="og:image" content="screenshots/home.jpg" />
+  <link rel="icon" href="icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@400;600;700;800&family=Pixelify+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #fff1f6;
+      --card: #ffffff;
+      --soft: #ffe3ee;
+      --pink: #ff82b2;
+      --accent: #ff4f8f;
+      --deep: #c2457a;
+      --text: #6b4558;
+      --muted: #9a7a8a;
+      --lav: #b48af2;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #2a1d27;
+        --card: #3a2735;
+        --soft: #4a3043;
+        --pink: #ff82b2;
+        --accent: #ff6fa3;
+        --deep: #ff9cc6;
+        --text: #ffe6f1;
+        --muted: #d4b3c4;
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      background-image: radial-gradient(var(--soft) 2px, transparent 2.5px);
+      background-size: 22px 22px;
+      color: var(--text);
+      font-family: Nunito, system-ui, sans-serif;
+      line-height: 1.55;
+    }
+    a { color: var(--accent); }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+    .pixel { font-family: 'Pixelify Sans', monospace; }
+    .frame {
+      background: var(--card);
+      border: 4px solid var(--pink);
+      box-shadow: 0 0 0 4px var(--card), 0 0 0 8px var(--deep), 0 10px 0 8px rgba(194, 69, 122, 0.25);
+      border-radius: 4px;
+    }
+    header.hero { text-align: center; padding: 56px 0 36px; }
+    .logo { display: inline-flex; align-items: center; gap: 14px; }
+    .logo img { width: 72px; height: 72px; image-rendering: pixelated; }
+    h1 {
+      font-family: Fredoka, sans-serif;
+      font-size: clamp(40px, 8vw, 72px);
+      margin: 0;
+      color: #fff;
+      -webkit-text-stroke: 3px var(--deep);
+      paint-order: stroke fill;
+      text-shadow: 0 5px 0 var(--deep);
+      letter-spacing: 1px;
+    }
+    .tag { font-size: 20px; font-weight: 700; margin: 14px 0 26px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--accent); color: #fff; text-decoration: none;
+      font-family: 'Pixelify Sans', monospace; font-size: 26px; letter-spacing: 1px;
+      padding: 16px 34px; border: 4px solid var(--deep);
+      box-shadow: 0 6px 0 var(--deep); transition: transform .1s, box-shadow .1s;
+    }
+    .btn:hover { transform: translateY(2px); box-shadow: 0 4px 0 var(--deep); }
+    .btn:active { transform: translateY(6px); box-shadow: 0 0 0 var(--deep); }
+    .btn svg { width: 26px; height: 26px; }
+    .meta { margin-top: 14px; font-size: 14px; color: var(--muted); font-weight: 600; }
+    .meta b { color: var(--text); }
+    .shot-main { margin: 40px auto 0; max-width: 960px; padding: 8px; }
+    .shot-main img, .gallery img { display: block; width: 100%; height: auto; }
+    section { padding: 44px 0 8px; }
+    h2 { font-family: Fredoka, sans-serif; font-size: 32px; margin: 0 0 18px; color: var(--deep); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; }
+    .card { padding: 18px 20px; }
+    .card h3 { margin: 0 0 6px; font-family: Fredoka, sans-serif; font-size: 20px; }
+    .card p { margin: 0; font-size: 15px; }
+    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; }
+    .gallery figure { margin: 0; padding: 6px; }
+    .gallery figcaption { text-align: center; font-weight: 700; padding: 8px 0 2px; font-size: 15px; }
+    ol.steps { padding-left: 22px; margin: 0; }
+    ol.steps li { margin: 8px 0; }
+    .note { background: var(--soft); padding: 14px 18px; border-left: 6px solid var(--lav); margin-top: 14px; font-size: 15px; }
+    code { background: var(--soft); padding: 2px 6px; font-size: 13px; word-break: break-all; }
+    details { padding: 14px 18px; margin-bottom: 12px; }
+    summary { font-weight: 800; cursor: pointer; }
+    details p { margin: 10px 0 0; }
+    footer { text-align: center; padding: 50px 0 40px; font-size: 14px; color: var(--muted); }
+    .heart { color: var(--accent); }
+    @media (max-width: 600px) {
+      .btn { font-size: 20px; padding: 14px 22px; }
+      .logo img { width: 52px; height: 52px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero wrap">
+    <div class="logo">
+      <img src="icon.png" alt="" width="72" height="72" />
+      <h1>Pinkberry RNG</h1>
+    </div>
+    <p class="tag">A cute pixel-art collecting game. Roll, find rare stuff, collect it all.</p>
+    <a class="btn" id="download" href="https://github.com/overhours/PinkBerry-RNG/releases/latest/download/Pinkberry-RNG-Setup.exe">
+      <svg viewBox="0 0 16 16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M7 1h2v8h2v-1h1v1h1v1h-1v1h-1v1h-1v1H7v-1H6v-1H5v-1H4V9h1V8h1v1h1z"/><path d="M2 13h12v2H2z"/></svg>
+      Download for Windows
+    </a>
+    <div class="meta" id="meta">Free · Windows 10 and 11 (64-bit)</div>
+    <div class="frame shot-main"><img src="screenshots/home.jpg" alt="The Pinkberry RNG home screen" width="1600" height="989" /></div>
+  </header>
+
+  <main class="wrap">
+    <section>
+      <h2>What is it?</h2>
+      <div class="grid">
+        <div class="frame card"><h3>Roll for treasures</h3><p>Over 400 things to find, from Common all the way up to Lola’s Plush Pets at 1 in 125,000.</p></div>
+        <div class="frame card"><h3>Shiny versions</h3><p>Anything can come out Shiny, Golden or Rainbow. Good luck finding a Rainbow plushie.</p></div>
+        <div class="frame card"><h3>10 worlds</h3><p>Each world has its own stuff, its own look, and weather that changes your luck.</p></div>
+        <div class="frame card"><h3>Upgrades and pets</h3><p>Spend hearts on luck and speed, hatch pets for bonuses, and rebirth for permanent perks.</p></div>
+        <div class="frame card"><h3>Quests and awards</h3><p>Daily and weekly quests, secret quests, and lots of achievements to unlock.</p></div>
+        <div class="frame card"><h3>Lola the bunny</h3><p>Your little guide. She shows you around and hangs out in the corner while you play.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Screenshots</h2>
+      <div class="gallery">
+        <figure class="frame"><img src="screenshots/roll.jpg" alt="Rolling" loading="lazy" width="1600" height="989" /><figcaption>Rolling</figcaption></figure>
+        <figure class="frame"><img src="screenshots/reveal.jpg" alt="Finding a Plush Pet" loading="lazy" width="1600" height="989" /><figcaption>Finding one of Lola’s Plush Pets</figcaption></figure>
+        <figure class="frame"><img src="screenshots/collection.jpg" alt="The collection" loading="lazy" width="1600" height="989" /><figcaption>Your collection</figcaption></figure>
+        <figure class="frame"><img src="screenshots/inventory.jpg" alt="The inventory" loading="lazy" width="1600" height="989" /><figcaption>Your inventory</figcaption></figure>
+      </div>
+    </section>
+
+    <section id="install">
+      <h2>How to install</h2>
+      <div class="frame card">
+        <ol class="steps">
+          <li>Click <b>Download for Windows</b> above.</li>
+          <li>Open <b>Pinkberry-RNG-Setup.exe</b> from your downloads.</li>
+          <li>Pick where to install it and click Install. That’s it. It adds a shortcut to your desktop and Start menu.</li>
+        </ol>
+        <div class="note">
+          <b>Seeing a blue “Windows protected your PC” box?</b> That happens with games from small developers that haven’t paid for a code-signing certificate. Click <b>More info</b>, then <b>Run anyway</b>. If you want to double-check the file first, see “Is it safe?” below.
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Questions</h2>
+      <details class="frame"><summary>Is it safe?</summary>
+        <p>Yes. The game doesn’t need an account, doesn’t collect anything about you, and doesn’t show ads. It only goes online to check for updates.</p>
+        <p>You can check your download matches the official one. Open PowerShell and run <code>Get-FileHash $HOME\Downloads\Pinkberry-RNG-Setup.exe</code>. The result should match this:</p>
+        <p><code id="sha">Shown on the <a href="https://github.com/overhours/PinkBerry-RNG/releases/latest">latest release page</a>.</code></p>
+      </details>
+      <details class="frame"><summary>How do updates work?</summary>
+        <p>You only install once. When there’s an update, a flashing button shows up at the top of the game. Click it and the game updates itself and restarts. Your save is kept.</p>
+      </details>
+      <details class="frame"><summary>Where is my save?</summary>
+        <p>On your computer, in <code>%APPDATA%\Pinkberry RNG\saves</code>. The game saves by itself and keeps backups. You can also export your save from Settings.</p>
+      </details>
+      <details class="frame"><summary>How do I uninstall it?</summary>
+        <p>Go to Windows Settings → Apps → Installed apps, find Pinkberry RNG and click Uninstall.</p>
+      </details>
+      <details class="frame"><summary>Does it work on Mac or phones?</summary>
+        <p>Not right now. It’s Windows only.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <p>Made with <span class="heart">♥</span> for Lola · <a href="https://github.com/overhours/PinkBerry-RNG/releases">All versions</a></p>
+  </footer>
+
+  <script>
+    // Show the newest version, size and checksum from latest.json (updated every release).
+    fetch('latest.json', { cache: 'no-store' })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((info) => {
+        if (!info) return;
+        const mb = (info.size / 1048576).toFixed(0);
+        const date = new Date(info.date + 'T12:00:00').toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+        document.getElementById('meta').innerHTML = 'Version <b>' + info.version + '</b> · ' + mb + ' MB · ' + date + ' · Free · Windows 10 and 11 (64-bit)';
+        document.getElementById('sha').textContent = info.sha256.toUpperCase();
+      })
+      .catch(() => {});
+  </script>
+</body>
+</html>
