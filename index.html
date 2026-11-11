@@ -1,203 +1,379 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pinkberry RNG</title>
-  <meta name="description" content="A cute pixel-art collecting game for Windows. Roll for treasures, find rare ones, collect them all." />
-  <meta property="og:title" content="Pinkberry RNG" />
-  <meta property="og:description" content="A cute pixel-art collecting game for Windows." />
-  <meta property="og:image" content="screenshots/home.jpg" />
+  <title>Download Pinkberry RNG</title>
+  <meta name="description" content="Download Pinkberry RNG for Windows. Free, no account needed. Step-by-step install guide, system requirements, updates and help." />
+  <meta name="theme-color" content="#ffe0ec" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Download Pinkberry RNG" />
+  <meta property="og:description" content="A free, cute pixel-art collecting game for Windows. Installs in about a minute." />
+  <meta property="og:url" content="https://overhours.github.io/PinkBerry-RNG/" />
+  <meta property="og:image" content="https://overhours.github.io/PinkBerry-RNG/shots/home.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@400;600;700;800&family=Pixelify+Sans:wght@400;600&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg: #fff1f6;
-      --card: #ffffff;
-      --soft: #ffe3ee;
-      --pink: #ff82b2;
-      --accent: #ff4f8f;
-      --deep: #c2457a;
-      --text: #6b4558;
-      --muted: #9a7a8a;
-      --lav: #b48af2;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) {
-        --bg: #2a1d27;
-        --card: #3a2735;
-        --soft: #4a3043;
-        --pink: #ff82b2;
-        --accent: #ff6fa3;
-        --deep: #ff9cc6;
-        --text: #ffe6f1;
-        --muted: #d4b3c4;
-      }
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      background: var(--bg);
-      background-image: radial-gradient(var(--soft) 2px, transparent 2.5px);
-      background-size: 22px 22px;
-      color: var(--text);
-      font-family: Nunito, system-ui, sans-serif;
-      line-height: 1.55;
-    }
-    a { color: var(--accent); }
-    .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
-    .pixel { font-family: 'Pixelify Sans', monospace; }
-    .frame {
-      background: var(--card);
-      border: 4px solid var(--pink);
-      box-shadow: 0 0 0 4px var(--card), 0 0 0 8px var(--deep), 0 10px 0 8px rgba(194, 69, 122, 0.25);
-      border-radius: 4px;
-    }
-    header.hero { text-align: center; padding: 56px 0 36px; }
-    .logo { display: inline-flex; align-items: center; gap: 14px; }
-    .logo img { width: 72px; height: 72px; image-rendering: pixelated; }
-    h1 {
-      font-family: Fredoka, sans-serif;
-      font-size: clamp(40px, 8vw, 72px);
-      margin: 0;
-      color: #fff;
-      -webkit-text-stroke: 3px var(--deep);
-      paint-order: stroke fill;
-      text-shadow: 0 5px 0 var(--deep);
-      letter-spacing: 1px;
-    }
-    .tag { font-size: 20px; font-weight: 700; margin: 14px 0 26px; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 10px;
-      background: var(--accent); color: #fff; text-decoration: none;
-      font-family: 'Pixelify Sans', monospace; font-size: 26px; letter-spacing: 1px;
-      padding: 16px 34px; border: 4px solid var(--deep);
-      box-shadow: 0 6px 0 var(--deep); transition: transform .1s, box-shadow .1s;
-    }
-    .btn:hover { transform: translateY(2px); box-shadow: 0 4px 0 var(--deep); }
-    .btn:active { transform: translateY(6px); box-shadow: 0 0 0 var(--deep); }
-    .btn svg { width: 26px; height: 26px; }
-    .meta { margin-top: 14px; font-size: 14px; color: var(--muted); font-weight: 600; }
-    .meta b { color: var(--text); }
-    .shot-main { margin: 40px auto 0; max-width: 960px; padding: 8px; }
-    .shot-main img, .gallery img { display: block; width: 100%; height: auto; }
-    section { padding: 44px 0 8px; }
-    h2 { font-family: Fredoka, sans-serif; font-size: 32px; margin: 0 0 18px; color: var(--deep); }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; }
-    .card { padding: 18px 20px; }
-    .card h3 { margin: 0 0 6px; font-family: Fredoka, sans-serif; font-size: 20px; }
-    .card p { margin: 0; font-size: 15px; }
-    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; }
-    .gallery figure { margin: 0; padding: 6px; }
-    .gallery figcaption { text-align: center; font-weight: 700; padding: 8px 0 2px; font-size: 15px; }
-    ol.steps { padding-left: 22px; margin: 0; }
-    ol.steps li { margin: 8px 0; }
-    .note { background: var(--soft); padding: 14px 18px; border-left: 6px solid var(--lav); margin-top: 14px; font-size: 15px; }
-    code { background: var(--soft); padding: 2px 6px; font-size: 13px; word-break: break-all; }
-    details { padding: 14px 18px; margin-bottom: 12px; }
-    summary { font-weight: 800; cursor: pointer; }
-    details p { margin: 10px 0 0; }
-    footer { text-align: center; padding: 50px 0 40px; font-size: 14px; color: var(--muted); }
-    .heart { color: var(--accent); }
-    @media (max-width: 600px) {
-      .btn { font-size: 20px; padding: 14px 22px; }
-      .logo img { width: 52px; height: 52px; }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito:wght@500;600;700;800&family=Pixelify+Sans:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    document.documentElement.classList.remove('no-js');
+    try {
+      var t = localStorage.getItem('pb-theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  </script>
 </head>
 <body>
-  <header class="hero wrap">
-    <div class="logo">
-      <img src="icon.png" alt="" width="72" height="72" />
-      <h1>Pinkberry RNG</h1>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top"><img src="icon.png" alt="" width="32" height="32" /><span>Pinkberry RNG</span></a>
+      <ul class="nav-links">
+        <li><a href="#guide">Install guide</a></li>
+        <li><a href="#requirements">Requirements</a></li>
+        <li><a href="#verify">Check the file</a></li>
+        <li><a href="#updates">Updates</a></li>
+        <li><a href="#help">Help</a></li>
+      </ul>
+      <button class="theme-btn" id="theme" type="button" aria-label="Switch between day and night look"><span aria-hidden="true">☾</span></button>
+      <a class="btn small" href="https://github.com/overhours/PinkBerry-RNG/releases/latest/download/Pinkberry-RNG-Setup.exe" data-download>Download</a>
     </div>
-    <p class="tag">A cute pixel-art collecting game. Roll, find rare stuff, collect it all.</p>
-    <a class="btn" id="download" href="https://github.com/overhours/PinkBerry-RNG/releases/latest/download/Pinkberry-RNG-Setup.exe">
-      <svg viewBox="0 0 16 16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M7 1h2v8h2v-1h1v1h1v1h-1v1h-1v1h-1v1H7v-1H6v-1H5v-1H4V9h1V8h1v1h1z"/><path d="M2 13h12v2H2z"/></svg>
-      Download for Windows
-    </a>
-    <div class="meta" id="meta">Free · Windows 10 and 11 (64-bit)</div>
-    <div class="frame shot-main"><img src="screenshots/home.jpg" alt="The Pinkberry RNG home screen" width="1600" height="989" /></div>
   </header>
 
-  <main class="wrap">
-    <section>
-      <h2>What is it?</h2>
-      <div class="grid">
-        <div class="frame card"><h3>Roll for animals</h3><p>Over 400 animals and 670+ things to find, across 14 rarities, all the way up to Lola’s Plush Pets at 1 in a million.</p></div>
-        <div class="frame card"><h3>Shiny versions</h3><p>Anything can come out Shiny, Golden or Rainbow. Good luck finding a Rainbow plushie.</p></div>
-        <div class="frame card"><h3>10 worlds</h3><p>Each world has its own stuff, its own look, and weather that changes your luck.</p></div>
-        <div class="frame card"><h3>Upgrades and pets</h3><p>Spend hearts on luck and speed, hatch pets for bonuses, and rebirth for permanent perks.</p></div>
-        <div class="frame card"><h3>Quests and awards</h3><p>Daily and weekly quests, secret quests, and lots of achievements to unlock.</p></div>
-        <div class="frame card"><h3>Lola the bunny</h3><p>Your little guide. She shows you around and hangs out in the corner while you play.</p></div>
-      </div>
-    </section>
+  <main id="top">
+    <!-- ───────── Download ───────── -->
+    <section class="hero" aria-labelledby="title">
+      <div class="floaters" id="floaters" aria-hidden="true"></div>
+      <div class="wrap hero-grid">
+        <div>
+          <div class="app-id">
+            <div class="frame app-icon"><img src="icon.png" alt="" width="64" height="64" /></div>
+            <div>
+              <div class="label">Download for Windows</div>
+              <h1 id="title">Pinkberry RNG</h1>
+            </div>
+          </div>
+          <p class="lede">A free, cute pixel-art collecting game. Download it, install it in about a minute, and start rolling.</p>
+          <div class="dl-box">
+            <a class="btn big" id="download" href="https://github.com/overhours/PinkBerry-RNG/releases/latest/download/Pinkberry-RNG-Setup.exe" data-download>
+              <svg width="28" height="28" viewBox="0 0 16 16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M7 1h2v8h2v-1h1v1h1v1h-1v1h-1v1h-1v1H7v-1H6v-1H5v-1H4V9h1V8h1v1h1z" /><path d="M2 13h12v2H2z" /></svg>
+              <span class="stack">Download for Windows<span class="sub" id="dl-sub">Pinkberry-RNG-Setup.exe</span></span>
+            </a>
+            <div class="os-note" id="os-note" role="note">
+              <span id="os-text">Pinkberry RNG only runs on Windows PCs. Open this page on your PC to download it.</span>
+              <button type="button" id="copy-link">Copy link</button>
+            </div>
+            <div class="dl-meta" id="dl-meta">
+              <span class="chip"><i class="dot"></i> Free</span>
+              <span class="chip">Windows 10 &amp; 11 · 64-bit</span>
+              <span class="chip">No account needed</span>
+            </div>
+            <div class="dl-links">
+              <a href="#releases">What’s new</a>
+              <a href="#releases">Older versions</a>
+              <a href="#verify">Check the file</a>
+            </div>
+          </div>
+        </div>
 
-    <section>
-      <h2>Screenshots</h2>
-      <div class="gallery">
-        <figure class="frame"><img src="screenshots/roll.jpg" alt="Rolling" loading="lazy" width="1600" height="989" /><figcaption>Rolling</figcaption></figure>
-        <figure class="frame"><img src="screenshots/reveal.jpg" alt="Finding a Plush Pet" loading="lazy" width="1600" height="989" /><figcaption>Finding one of Lola’s Plush Pets</figcaption></figure>
-        <figure class="frame"><img src="screenshots/collection.jpg" alt="The collection" loading="lazy" width="1600" height="989" /><figcaption>Your collection</figcaption></figure>
-        <figure class="frame"><img src="screenshots/inventory.jpg" alt="The inventory" loading="lazy" width="1600" height="989" /><figcaption>Your inventory</figcaption></figure>
-      </div>
-    </section>
-
-    <section id="install">
-      <h2>How to install</h2>
-      <div class="frame card">
-        <ol class="steps">
-          <li>Click <b>Download for Windows</b> above.</li>
-          <li>Open <b>Pinkberry-RNG-Setup.exe</b> from your downloads.</li>
-          <li>Pick where to install it and click Install. That’s it. It adds a shortcut to your desktop and Start menu.</li>
-        </ol>
-        <div class="note">
-          <b>Seeing a blue “Windows protected your PC” box?</b> That happens with games from small developers that haven’t paid for a code-signing certificate. Click <b>More info</b>, then <b>Run anyway</b>. If you want to double-check the file first, see “Is it safe?” below.
+        <div class="hero-media">
+          <div style="position: relative">
+            <span class="sticker" style="right: -10px; top: -18px">Free!</span>
+            <div class="frame appwin">
+              <div class="winbar"><img src="icon.png" alt="" />Pinkberry RNG<span class="ctl"><i></i><i></i><i></i></span></div>
+              <img src="shots/roll.jpg" alt="Pinkberry RNG: a 10x roll showing ten cute pixel animals" width="1600" height="989" />
+            </div>
+            <img class="lola-tip" id="lola" alt="Lola the bunny" width="104" height="104" />
+          </div>
         </div>
       </div>
     </section>
 
-    <section>
-      <h2>Questions</h2>
-      <details class="frame"><summary>Is it safe?</summary>
-        <p>Yes. The game doesn’t need an account, doesn’t collect anything about you, and doesn’t show ads. It only goes online to check for updates.</p>
-        <p>You can check your download matches the official one. Open PowerShell and run <code>Get-FileHash $HOME\Downloads\Pinkberry-RNG-Setup.exe</code>. The result should match this:</p>
-        <p><code id="sha">Shown on the <a href="https://github.com/overhours/PinkBerry-RNG/releases/latest">latest release page</a>.</code></p>
-      </details>
-      <details class="frame"><summary>How do updates work?</summary>
-        <p>You only install once. When there’s an update, a flashing button shows up at the top of the game. Click it and the game updates itself and restarts. Your save is kept.</p>
-      </details>
-      <details class="frame"><summary>Where is my save?</summary>
-        <p>On your computer, in <code>%APPDATA%\Pinkberry RNG\saves</code>. The game saves by itself and keeps backups. You can also export your save from Settings.</p>
-      </details>
-      <details class="frame"><summary>How do I uninstall it?</summary>
-        <p>Go to Windows Settings → Apps → Installed apps, find Pinkberry RNG and click Uninstall.</p>
-      </details>
-      <details class="frame"><summary>Does it work on Mac or phones?</summary>
-        <p>Not right now. It’s Windows only.</p>
-      </details>
+    <div class="wrap quick">
+      <a class="frame reveal" href="#guide"><img data-icon="book" alt="" /><div><b>Install guide</b><span>Every screen, step by step</span></div></a>
+      <a class="frame reveal" style="--d: 70ms" href="#requirements"><img data-icon="search" alt="" /><div><b>Requirements</b><span>Will it run on my PC?</span></div></a>
+      <a class="frame reveal" style="--d: 140ms" href="#verify"><img data-icon="lock" alt="" /><div><b>Check the file</b><span>Make sure it’s the real one</span></div></a>
+      <a class="frame reveal" style="--d: 210ms" href="#help"><img data-icon="heart" alt="" /><div><b>Help</b><span>Something not working?</span></div></a>
+    </div>
+
+    <!-- ───────── Install guide ───────── -->
+    <section id="guide" aria-labelledby="guide-title">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <span class="kicker">Install guide</span>
+          <h2 id="guide-title">Installed in <em>five steps</em></h2>
+          <p>Here’s every screen you’ll see, in order, and what to click.</p>
+        </div>
+        <nav class="guide-progress" aria-label="Install steps">
+          <a href="#step-1" data-step="1">1</a><a href="#step-2" data-step="2">2</a><a href="#step-3" data-step="3">3</a><a href="#step-4" data-step="4">4</a><a href="#step-5" data-step="5">5</a>
+        </nav>
+
+        <div class="steps">
+          <!-- 1 -->
+          <article class="frame step reveal" id="step-1">
+            <div>
+              <span class="step-no">1</span>
+              <h3>Open the download</h3>
+              <p>When the download finishes, open <b>Pinkberry-RNG-Setup.exe</b>. In most browsers it pops up in the corner. Click <b>Open file</b>.</p>
+              <p>Can’t find it? It’s in your <b>Downloads</b> folder. Press <span class="kbd">Ctrl</span> + <span class="kbd">J</span> in your browser to see your downloads.</p>
+              <div class="tip"><img data-icon="sparkle" alt="" /><span>If your browser says the file <b>isn’t commonly downloaded</b>, click the <b>…</b> next to it and choose <b>Keep</b>.</span></div>
+            </div>
+            <div class="scene" aria-hidden="true">
+              <div class="mock dlpanel">
+                <div class="hd">Downloads <span>…</span></div>
+                <div class="dlrow">
+                  <div class="ficon"><img src="icon.png" alt="" /></div>
+                  <div class="fn"><b>Pinkberry-RNG-Setup.exe</b><span class="dl-size">Done</span><div class="bar"><i></i></div></div>
+                  <span class="open hl">Open file</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- 2 -->
+          <article class="frame step reveal" id="step-2">
+            <div>
+              <span class="step-no">2</span>
+              <h3>Click “More info”, then “Run anyway”</h3>
+              <p>Windows may show a blue box saying <b>Windows protected your PC</b>. This is normal for games from small developers that haven’t bought a code-signing certificate (they cost hundreds of dollars a year).</p>
+              <p>Click <b>More info</b>. A <b>Run anyway</b> button appears. Click it.</p>
+              <div class="tip"><img data-icon="lock" alt="" /><span>Want to be sure the file is the real one first? <a href="#verify">Check it here</a>. It takes 30 seconds.</span></div>
+            </div>
+            <div class="scene" aria-hidden="true">
+              <div class="ss-pair">
+                <div class="ss">
+                  <span class="tag">A</span>
+                  <h4>Windows protected your PC</h4>
+                  <p>Microsoft Defender SmartScreen prevented an unrecognised app from starting. Running this app might put your PC at risk.</p>
+                  <span class="link hl">More info</span>
+                  <div class="btns"><span>Don’t run</span></div>
+                </div>
+                <div class="ss">
+                  <span class="tag">B</span>
+                  <h4>Windows protected your PC</h4>
+                  <dl><dt>App:</dt><dd>Pinkberry-RNG-Setup.exe</dd><dt>Publisher:</dt><dd>Unknown publisher</dd></dl>
+                  <div class="btns"><span class="hl">Run anyway</span><span>Don’t run</span></div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- 3 -->
+          <article class="frame step reveal" id="step-3">
+            <div>
+              <span class="step-no">3</span>
+              <h3>Choose who it’s for</h3>
+              <p>The installer asks if the game is for everyone on this PC or just you. <b>Only for me</b> is the easy choice and doesn’t need an admin password.</p>
+              <p>Then click <b>Next</b>.</p>
+            </div>
+            <div class="scene" aria-hidden="true">
+              <div class="mock">
+                <div class="mock-title"><img src="icon.png" alt="" />Pinkberry RNG Setup<span class="wc"><span>–</span><span>✕</span></span></div>
+                <div class="wiz-hd"><div><b>Installation Options</b><span>Choose for which users you want to install Pinkberry RNG.</span></div><img src="icon.png" alt="" /></div>
+                <div class="wiz-body">
+                  <div class="radio"><i></i>Anyone who uses this computer (all users)</div>
+                  <div class="radio on hl"><i></i>Only for me</div>
+                </div>
+                <div class="wiz-ft"><span class="wbtn">Next &gt;</span><span class="wbtn">Cancel</span></div>
+              </div>
+            </div>
+          </article>
+
+          <!-- 4 -->
+          <article class="frame step reveal" id="step-4">
+            <div>
+              <span class="step-no">4</span>
+              <h3>Pick a folder and click Install</h3>
+              <p>The installer suggests a folder. It’s fine to leave it as it is. Click <b>Install</b> and wait a few seconds.</p>
+              <div class="tip"><img data-icon="bag" alt="" /><span>You need about <b>300 MB</b> of free space.</span></div>
+            </div>
+            <div class="scene" aria-hidden="true">
+              <div class="mock">
+                <div class="mock-title"><img src="icon.png" alt="" />Pinkberry RNG Setup<span class="wc"><span>–</span><span>✕</span></span></div>
+                <div class="wiz-hd"><div><b>Choose Install Location</b><span>Choose the folder in which to install Pinkberry RNG.</span></div><img src="icon.png" alt="" /></div>
+                <div class="wiz-body">
+                  <div style="font-size: 12.5px; color: #555">Destination Folder</div>
+                  <div class="field"><span class="in">C:\Users\You\AppData\Local\Programs\…</span><span class="wbtn">Browse…</span></div>
+                </div>
+                <div class="wiz-ft"><span class="wbtn">&lt; Back</span><span class="wbtn primary hl">Install</span><span class="wbtn">Cancel</span></div>
+              </div>
+            </div>
+          </article>
+
+          <!-- 5 -->
+          <article class="frame step reveal" id="step-5">
+            <div>
+              <span class="step-no">5</span>
+              <h3>Click Finish and play</h3>
+              <p>Leave <b>Run Pinkberry RNG</b> ticked and click <b>Finish</b>. The game opens straight away.</p>
+              <p>Next time, open it from the <b>Pinkberry RNG</b> shortcut on your desktop or in the Start menu. Make a profile, press roll, and have fun!</p>
+            </div>
+            <div class="scene" aria-hidden="true" style="gap: 18px">
+              <div class="mock">
+                <div class="mock-title"><img src="icon.png" alt="" />Pinkberry RNG Setup<span class="wc"><span>–</span><span>✕</span></span></div>
+                <div class="wiz-body" style="min-height: 0; padding-bottom: 14px">
+                  <b style="display: block; font-size: 16px; margin-bottom: 6px">Completing Pinkberry RNG Setup</b>
+                  <div style="font-size: 12.5px; color: #555; margin-bottom: 10px">Pinkberry RNG has been installed on your computer.</div>
+                  <span class="check"><i>✓</i>Run Pinkberry RNG</span>
+                </div>
+                <div class="wiz-ft"><span class="wbtn primary hl">Finish</span></div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── Requirements ───────── -->
+    <section class="tint" id="requirements" aria-labelledby="req-title">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <span class="kicker">Requirements</span>
+          <h2 id="req-title">Will it run on <em>my PC?</em></h2>
+          <p>Almost certainly. It’s a small 2D game.</p>
+        </div>
+        <div class="reqs">
+          <div class="frame req reveal"><img data-icon="globe" alt="" /><div><div class="k">System</div><b>Windows 10 or 11</b><span>64-bit. Not for Mac, Linux or phones yet.</span></div></div>
+          <div class="frame req reveal" style="--d: 70ms"><img data-icon="bag" alt="" /><div><div class="k">Space</div><b>About 300 MB</b><span>The download itself is <span class="size-txt">about 82 MB</span>.</span></div></div>
+          <div class="frame req reveal" style="--d: 140ms"><img data-icon="bolt" alt="" /><div><div class="k">Computer</div><b>Most PCs from the last 10 years</b><span>Feels slow? Turn animations down in Settings.</span></div></div>
+          <div class="frame req reveal"><img data-icon="star" alt="" /><div><div class="k">Internet</div><b>Only for extras</b><span>Needed for updates and leaderboards. Plays fine offline.</span></div></div>
+          <div class="frame req reveal" style="--d: 70ms"><img data-icon="lock" alt="" /><div><div class="k">Account</div><b>None needed</b><span>No sign-up and no email. Your save stays on your PC.</span></div></div>
+          <div class="frame req reveal" style="--d: 140ms"><img data-icon="heart" alt="" /><div><div class="k">Price</div><b>Free</b><span>No ads and nothing to buy with real money.</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── Verify ───────── -->
+    <section id="verify" aria-labelledby="verify-title">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <span class="kicker">Check the file</span>
+          <h2 id="verify-title">Make sure it’s the <em>real one</em></h2>
+          <p>Every installer has a fingerprint called a SHA-256. If yours matches the one below, it’s the exact file that was published, with nothing added.</p>
+        </div>
+        <div class="verify">
+          <div class="frame reveal">
+            <h3>1. Run this in PowerShell</h3>
+            <p>Press <span class="kbd">Win</span>, type <b>PowerShell</b>, open it, and paste this:</p>
+            <pre class="term" id="cmd"><span class="p">PS&gt;</span> Get-FileHash $HOME\Downloads\Pinkberry-RNG-Setup.exe</pre>
+            <div class="row-btns" style="margin-top: 12px"><button class="copy" type="button" data-copy="Get-FileHash $HOME\Downloads\Pinkberry-RNG-Setup.exe">Copy command</button></div>
+          </div>
+          <div class="frame lav reveal" style="--d: 100ms">
+            <h3>2. Compare with this</h3>
+            <p>The <b>Hash</b> it shows should match this, for <span id="hash-ver">the latest version</span>:</p>
+            <div class="hashbox">
+              <code id="sha">Loading…</code>
+              <div class="row-btns"><button class="copy" type="button" id="copy-sha" hidden>Copy hash</button></div>
+            </div>
+            <p style="margin: 16px 0 0; font-size: 15px">Doesn’t match? Don’t run it. Delete it and download it again from this page.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── Updates ───────── -->
+    <section class="tint" id="updates" aria-labelledby="upd-title">
+      <div class="wrap updates">
+        <div class="frame update-demo reveal" aria-hidden="true">
+          <div class="ingame-bar"><img src="icon.png" alt="" /><span class="t">Pinkberry</span><span class="upd-btn">NEW UPDATE!</span></div>
+          <div class="upd-steps">
+            <div><b>1</b>Click it</div>
+            <div><b>2</b>It downloads</div>
+            <div><b>3</b>Game restarts</div>
+          </div>
+        </div>
+        <div class="reveal" style="--d: 100ms">
+          <span class="kicker">Updates</span>
+          <h2 id="upd-title">Install once. <em>Updates come to you.</em></h2>
+          <p style="font-size: 18px; color: var(--ink-2); margin: 16px 0 0">You never need this page again after installing. When there’s a new version, a flashing <b>NEW UPDATE</b> button shows up at the top of the game.</p>
+          <ul class="points">
+            <li><img data-icon="heart" alt="" />Your save, collection and settings are always kept.</li>
+            <li><img data-icon="bolt" alt="" />Updates are small and take a few seconds.</li>
+            <li><img data-icon="lock" alt="" />They come from the official Pinkberry RNG GitHub, like this download.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── Releases ───────── -->
+    <section id="releases" aria-labelledby="rel-title">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <span class="kicker">Versions</span>
+          <h2 id="rel-title">What’s <em>new</em></h2>
+        </div>
+        <div class="releases">
+          <article class="frame lav rel-latest skeleton" id="rel-latest"></article>
+          <div class="frame vlist" id="vlist"><h3>Older versions</h3><div class="skeleton" style="min-height: 200px; filter: none"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── Help ───────── -->
+    <section class="tint" id="help" aria-labelledby="help-title">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <span class="kicker">Help</span>
+          <h2 id="help-title">Something <em>not working?</em></h2>
+          <p>Here are the fixes for the usual problems.</p>
+        </div>
+        <div class="faq-cols">
+          <h3>Installing</h3>
+          <details class="frame q reveal"><summary>My browser blocked the download</summary><div class="a"><p>Some browsers are careful with new <b>.exe</b> files. Open your downloads (<span class="kbd">Ctrl</span> + <span class="kbd">J</span>), click the <b>…</b> or arrow next to the file, and choose <b>Keep</b>. If it asks again, choose <b>Keep anyway</b>.</p></div></details>
+          <details class="frame q reveal"><summary>There’s no “Run anyway” button</summary><div class="a"><p>Click the small <b>More info</b> link first. The button only shows up after that. See <a href="#step-2">step 2</a>.</p></div></details>
+          <details class="frame q reveal"><summary>My antivirus flagged it</summary><div class="a"><p>New games that aren’t code-signed sometimes get flagged by mistake. <a href="#verify">Check the file’s fingerprint</a>. If it matches, it’s the real installer and you can allow it.</p></div></details>
+          <details class="frame q reveal"><summary>It says Pinkberry RNG is still running</summary><div class="a"><p>Close the game first, then run the installer again. If it still complains, open Task Manager (<span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">Esc</span>), end <b>Pinkberry RNG</b>, and try again.</p></div></details>
+
+          <h3>Playing</h3>
+          <details class="frame q reveal"><summary>The game won’t open, or the window is blank</summary><div class="a"><p>Restart your PC and try once more. If it still won’t open, download the installer again and reinstall it over the top. Your save isn’t touched by reinstalling.</p></div></details>
+          <details class="frame q reveal"><summary>The game feels slow or laggy</summary><div class="a"><p>Open <b>Settings</b> in the game and turn down the animation level, or turn off <b>Background effects</b>.</p></div></details>
+          <details class="frame q reveal"><summary>Where is my save?</summary><div class="a"><p>In <code class="inline">%APPDATA%\Pinkberry RNG\saves</code>. Paste that into the address bar of File Explorer to open it. The game saves by itself and keeps backups.</p></div></details>
+          <details class="frame q reveal"><summary>How do I move my save to a new PC?</summary><div class="a"><ol><li>On your old PC, open <b>Settings</b> in the game and click <b>Export save</b>.</li><li>Copy that file to the new PC.</li><li>Install the game on the new PC, then use <b>Import save</b> in Settings.</li></ol></div></details>
+
+          <h3>Other</h3>
+          <details class="frame q reveal"><summary>Is it safe? What does it send online?</summary><div class="a"><p>It’s safe. There’s no account and no tracking. It goes online for two things only: checking for updates, and the leaderboards.</p><p>The leaderboards show your profile name, avatar, title and stats. You can hide yourself on the Profile page in the game.</p></div></details>
+          <details class="frame q reveal"><summary>How do I uninstall it?</summary><div class="a"><p>Open Windows <b>Settings → Apps → Installed apps</b>, find <b>Pinkberry RNG</b>, and click <b>Uninstall</b>. Your saves stay in <code class="inline">%APPDATA%\Pinkberry RNG</code> in case you come back. Delete that folder too if you want everything gone.</p></div></details>
+          <details class="frame q reveal"><summary>Does it work on Mac or phones?</summary><div class="a"><p>Not right now. It’s Windows only.</p></div></details>
+          <details class="frame q reveal"><summary>Do I need to download it again for updates?</summary><div class="a"><p>No. The game updates itself. See <a href="#updates">Updates</a>.</p></div></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────── Final ───────── -->
+    <section class="final" aria-labelledby="final-title">
+      <div class="wrap reveal">
+        <img class="lola" id="lola-end" alt="" width="120" height="120" />
+        <h2 id="final-title">Ready to <em>roll?</em></h2>
+        <p>Free on Windows. Installed in about a minute.</p>
+        <a class="btn big" href="https://github.com/overhours/PinkBerry-RNG/releases/latest/download/Pinkberry-RNG-Setup.exe" data-download>
+          <svg width="28" height="28" viewBox="0 0 16 16" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true"><path d="M7 1h2v8h2v-1h1v1h1v1h-1v1h-1v1h-1v1H7v-1H6v-1H5v-1H4V9h1V8h1v1h1z" /><path d="M2 13h12v2H2z" /></svg>
+          Download for Windows
+        </a>
+      </div>
     </section>
   </main>
 
-  <footer class="wrap">
-    <p>Made with <span class="heart">♥</span> for Lola · <a href="https://github.com/overhours/PinkBerry-RNG/releases">All versions</a></p>
+  <footer>
+    <div class="wrap foot">
+      <a class="brand" href="#top"><img src="icon.png" alt="" width="32" height="32" /><span>Pinkberry RNG</span></a>
+      <nav aria-label="Footer">
+        <a href="#guide">Install guide</a>
+        <a href="#help">Help</a>
+        <a href="https://github.com/overhours/PinkBerry-RNG/releases">All versions on GitHub</a>
+      </nav>
+      <span>Made with <span style="color: var(--accent)">♥</span> for Lola</span>
+    </div>
   </footer>
 
-  <script>
-    // Show the newest version, size and checksum from latest.json (updated every release).
-    fetch('latest.json', { cache: 'no-store' })
-      .then((r) => (r.ok ? r.json() : null))
-      .then((info) => {
-        if (!info) return;
-        const mb = (info.size / 1048576).toFixed(0);
-        const date = new Date(info.date + 'T12:00:00').toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
-        document.getElementById('meta').innerHTML = 'Version <b>' + info.version + '</b> · ' + mb + ' MB · ' + date + ' · Free · Windows 10 and 11 (64-bit)';
-        document.getElementById('sha').textContent = info.sha256.toUpperCase();
-      })
-      .catch(() => {});
-  </script>
+  <!-- Shows after you click Download -->
+  <div class="frame started" id="started" role="status" aria-live="polite">
+    <img id="started-lola" alt="" />
+    <div class="txt"><b>Your download has started!</b>Next, open the file and follow the steps. <a href="#step-1" id="show-steps">Show me how</a> · <a href="https://github.com/overhours/PinkBerry-RNG/releases/latest/download/Pinkberry-RNG-Setup.exe" data-download data-no-banner>Didn’t start?</a></div>
+    <button class="x" type="button" id="started-x" aria-label="Close">✕</button>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
