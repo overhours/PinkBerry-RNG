@@ -1553,6 +1553,55 @@ details.q .a ol {
   padding-left: 20px;
 }
 
+/* ───────── Support (tip jar) ───────── */
+.support {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 34px 40px;
+}
+.support-art {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, var(--sky-2) 0%, transparent 70%);
+}
+.support-art img {
+  width: 96px;
+  height: 96px;
+  image-rendering: pixelated;
+  animation: bob 3s ease-in-out infinite;
+}
+.support-text h2 {
+  font-size: clamp(28px, 3.6vw, 40px);
+}
+.support-text p {
+  margin: 12px 0 22px;
+  max-width: 52ch;
+  font-size: 17px;
+  color: var(--ink-2);
+}
+@media (max-width: 560px) {
+  .support {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+    padding: 26px 20px;
+  }
+  .support-art {
+    width: 110px;
+    height: 110px;
+  }
+  .support-art img {
+    width: 72px;
+    height: 72px;
+  }
+}
+
 /* ───────── Final ───────── */
 .final {
   text-align: center;
